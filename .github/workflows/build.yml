@@ -3,13 +3,33 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: namespace-profile-linux-default
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: namespacelabs/nscloud-checkout-action@v9
+      - uses: actions/setup-node@v6
         with:
           node-version-file: ".nvmrc"
-      - run: ./gradlew build
+          package-manager-cache: false
+      - name: Set up cache
+        uses: namespacelabs/nscloud-cache-action@v1
+        with:
+          cache: |
+            "npm"
+            "gradle"
+      - name: Setup gradle build cache
+        run: |
+          nsc cache gradle setup --init-gradle /tmp/init.gradle
+      - name: "setup java"
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'temurin'
+          java-version: 25
+          cache: "" # namespace handles this
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-disabled: true # namespace handles this
+      - run: ./gradlew --init-script=/tmp/init.gradle build
         working-directory: java
       - run: npm ci
       - run: npm run build
