@@ -24,4 +24,4 @@ Libraries and tools used:
 
 `./src/ui/intellij-icons/` includes icons from [IntelliJ Platform](https://intellij-icons.jetbrains.design), Licensed Apache 2.0.
 
-<img src="https://papermc.io/assets/misc/namespace-oss-badge.svg?project=mcsrc" alt="CI powered by namespace badge" />
+[![CI powered by namespace badge](https://papermc.io/assets/misc/namespace-oss-badge.svg?project=mcsrc)](https://namespace.so/github-actions/?utm_source=oss&utm_campaign=papermc)
